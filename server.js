@@ -108,7 +108,7 @@ app.post("/article", verifyAdmin, async (req, res) => {
 
     let newArticle;
     try {
-        newArticle = await prisma.usi_article.create({ data: { title: article.title, content: article.content } });
+        newArticle = await prisma.usi_article.create({ data: { title: article.title, content: article.content, createdAt: article.createdAt } });
     } catch (error) {
         console.log(error);
         if (error.code === "P2002") {
