@@ -3,6 +3,7 @@ const cors = require('cors');
 const { PrismaClient } = require('@prisma/client');
 const Joi = require('joi');
 const nodemailer = require('nodemailer');
+const path = require('path');
 
 const app = express();
 const prisma = new PrismaClient();
@@ -327,6 +328,13 @@ E-mail na školu: ${joinUs.mail}`
 
     res.status(200).json({ message: "OK" });
 })
+
+app.use(express.static(path.join(__dirname, '.', 'web')));
+
+// Handle SPA (Single Page Application) by redirecting all requests to 'index.html'
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '.', 'web/index.html'));
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
